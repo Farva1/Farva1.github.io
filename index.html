@@ -1,56 +1,413 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<title>Umme Farva | Cybersecurity Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Umme Farva | Cybersecurity Portfolio</title>
+  <meta name="description" content="Umme Farva — Cybersecurity portfolio: SOC, Azure security, incident response, threat intelligence, and automation labs." />
 
-<style>
-body {
-    font-family: Arial;
-    margin: 40px;
-    background-color: #0d1117;
-    color: white;
-}
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1930;
+      --card:#121a2b;
+      --text:#e8eefc;
+      --muted:#a8b3cf;
+      --accent:#7aa2ff;
+      --line:#1f2a44;
+      --shadow:0 12px 34px rgba(0,0,0,.28);
+      --shadow2:0 8px 20px rgba(0,0,0,.22);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 0%, #121f3f 0%, var(--bg) 55%) fixed;
+      color:var(--text);
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:28px 16px 70px; }
 
-h1 {
-    color: #58a6ff;
-}
+    header{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,25,48,.95), rgba(11,18,32,.92));
+      border-radius:18px;
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    header:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 160px at 18% 0%, rgba(122,162,255,.20), transparent 60%),
+        radial-gradient(520px 160px at 88% 20%, rgba(122,162,255,.10), transparent 55%);
+      pointer-events:none;
+      filter: blur(10px);
+    }
+    header > *{ position:relative; }
 
-a {
-    color: #58a6ff;
-    text-decoration: none;
-}
+    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+    .subtitle{ margin-top:8px; color:var(--muted); line-height:1.55; }
+    .btnrow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(18,26,43,.65);
+      color:var(--text);
+      transition:.18s ease;
+      user-select:none;
+    }
+    .btn:hover{ border-color: rgba(122,162,255,.75); transform: translateY(-1px); }
+    .btn.primary{ border-color: rgba(122,162,255,.55); background: rgba(122,162,255,.12); }
+    .btn.ghost{ background: rgba(15,25,48,.55); }
 
-.card {
-    background-color: #161b22;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-</style>
+    .controls{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1.3fr .9fr .9fr;
+      gap:12px;
+    }
+    .control{
+      border:1px solid var(--line);
+      background: rgba(18,26,43,.72);
+      border-radius:14px;
+      padding:10px 12px;
+      box-shadow: var(--shadow2);
+    }
+    .control label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+    input[type="text"], select{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(31,42,68,.9);
+      background: rgba(11,18,32,.9);
+      color: var(--text);
+      outline:none;
+    }
+    input[type="text"]:focus, select:focus{ border-color: rgba(122,162,255,.85); }
+
+    .meta{
+      margin-top:12px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      color: var(--muted);
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12,1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .card{
+      grid-column: span 6;
+      border:1px solid var(--line);
+      background: rgba(18,26,43,.78);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: var(--shadow2);
+      transition: .18s ease;
+    }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(122,162,255,.50); }
+    .cardhead{
+      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
+      margin-bottom:6px;
+    }
+    .title{
+      font-size:18px; margin:0; line-height:1.25;
+      letter-spacing:.1px;
+    }
+    .badge{
+      font-size:12px; color: var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px; border-radius:999px;
+      background: rgba(11,18,32,.55);
+      white-space:nowrap;
+    }
+    .desc{ color:var(--muted); line-height:1.55; margin:8px 0 10px; }
+    .tagrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .tag{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      padding:5px 8px;
+      border-radius:999px;
+      background: rgba(11,18,32,.35);
+    }
+    .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+    footer{
+      margin-top:22px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      opacity:.92;
+    }
+
+    .toast{
+      position: fixed; bottom: 16px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18,26,43,.95);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display:none;
+      z-index: 99;
+      max-width: calc(100% - 30px);
+    }
+
+    @media (max-width: 860px){
+      .controls{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      h1{ font-size:24px; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <header>
+      <h1>Umme Farva</h1>
+      <div class="subtitle">
+        Cybersecurity portfolio with SOC/Blue Team labs: SIEM (Microsoft Sentinel), Threat Intelligence, Incident Response,
+        Vulnerability Assessment, Network Traffic Analysis, Linux Hardening, Cloud IAM, Cryptography, and Python automation.
+      </div>
 
-<h1>Umme Farva – Cybersecurity Portfolio</h1>
+      <div class="btnrow">
+        <a class="btn primary" href="https://github.com/Farva1" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/umme-farva" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a class="btn" href="mailto:ummefarwa003@gmail.com">Email</a>
+        <button class="btn ghost" id="copyEmailBtn" type="button">Copy Email</button>
+      </div>
 
-<p>SOC Analyst | Azure Security | Python Automation | Incident Response Labs</p>
+      <div class="controls">
+        <div class="control">
+          <label for="search">Search</label>
+          <input id="search" type="text" placeholder="Search projects (e.g., Sentinel, Nessus, Wireshark, Linux, Python)" />
+        </div>
+        <div class="control">
+          <label for="filter">Category</label>
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="soc">SOC / SIEM</option>
+            <option value="cloud">Cloud Security</option>
+            <option value="ir">Incident Response</option>
+            <option value="vuln">Vulnerability Assessment</option>
+            <option value="network">Network / Traffic</option>
+            <option value="linux">Linux Hardening</option>
+            <option value="crypto">Cryptography</option>
+            <option value="firewall">Firewall</option>
+            <option value="automation">Automation / Scripting</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="sort">Sort</label>
+          <select id="sort">
+            <option value="featured">Featured</option>
+            <option value="az">A to Z</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
+      </div>
 
-<div class="card">
-<h2>🔐 Python Security Log Analysis</h2>
-<p>Python-based automation to detect suspicious failed login attempts from authentication logs.</p>
-<a href="https://github.com/Farva1/Python-Security-Log-Analysis">View Project</a>
-</div>
+      <div class="meta">
+        <div id="resultCount">Showing projects…</div>
+        <div id="stats">Portfolio</div>
+      </div>
+    </header>
 
-<div class="card">
-<h2>☁️ Microsoft Sentinel Threat Intelligence Lab</h2>
-<p>Azure Sentinel configuration, MITRE mapping, and threat intelligence enrichment.</p>
-<a href="https://github.com/Farva1/Sentinel-Threat-Intelligence-MITRE">View Project</a>
-</div>
+    <div class="grid" id="grid"></div>
 
-<div class="card">
-<h2>🛡️ Upcoming Projects</h2>
-<p>More SOC automation, Azure security labs, and network defense projects coming soon.</p>
-</div>
+    <footer>
+      © <span id="y"></span> Umme Farva • Built with GitHub Pages
+    </footer>
+  </div>
 
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const projects = [
+      {
+        featured: 1,
+        title: "Microsoft Sentinel Threat Intelligence and MITRE Mapping",
+        category: "soc",
+        badge: "SOC / SIEM",
+        desc: "Configured Microsoft Sentinel, ingested logs, created threat intelligence indicators, enriched detections, and mapped activity to MITRE ATT&CK.",
+        link: "https://github.com/Farva1/Sentinel-Threat-Intelligence-MITRE",
+        tags: ["Microsoft Sentinel", "MITRE ATT&CK", "Threat Intelligence", "Azure"]
+      },
+      {
+        featured: 2,
+        title: "Python Security Log Analysis",
+        category: "automation",
+        badge: "Automation",
+        desc: "Python automation to parse authentication logs, count failed login attempts per IP, and flag suspicious IP addresses based on repeated failures.",
+        link: "https://github.com/Farva1/Python-Security-Log-Analysis",
+        tags: ["Python", "Log Analysis", "SOC Automation"]
+      },
+      {
+        featured: 3,
+        title: "SOC Lab",
+        category: "soc",
+        badge: "SOC / SIEM",
+        desc: "SOC-focused lab work exploring detection workflows, alert triage, and log-driven investigations.",
+        link: "https://github.com/Farva1/SOC-Lab",
+        tags: ["SOC", "Detection", "Investigation"]
+      },
+      {
+        featured: 4,
+        title: "Azure IAM Cloud Security Lab",
+        category: "cloud",
+        badge: "Cloud Security",
+        desc: "Identity and access management lab covering access controls, least privilege concepts, and security posture practices using Azure and Entra ID.",
+        link: "https://github.com/Farva1/Azure-IAM-Cloud-Security-Lab",
+        tags: ["Azure", "IAM", "Entra ID", "Access Control"]
+      },
+      {
+        featured: 5,
+        title: "Vulnerability Assessment with Nessus",
+        category: "vuln",
+        badge: "Vulnerability Assessment",
+        desc: "Performed vulnerability scanning and assessment using Nessus, documented findings, and summarized remediation recommendations.",
+        link: "https://github.com/Farva1/Vulnerability-Assessment-Nessus-Lab",
+        tags: ["Nessus", "Vulnerability Scanning", "Risk", "Remediation"]
+      },
+      {
+        featured: 6,
+        title: "Network Traffic Analysis with Wireshark",
+        category: "network",
+        badge: "Network / Traffic",
+        desc: "Analyzed packet captures to identify protocols, indicators of suspicious activity, and network behavior using Wireshark.",
+        link: "https://github.com/Farva1/Network-Traffic-Analysis-Wireshark",
+        tags: ["Wireshark", "PCAP", "Traffic Analysis"]
+      },
+      {
+        featured: 7,
+        title: "Linux Security Hardening Lab",
+        category: "linux",
+        badge: "Linux Hardening",
+        desc: "Applied Linux hardening practices and secure configuration improvements, including service configuration and baseline security measures.",
+        link: "https://github.com/Farva1/Linux-Security-Hardening-Lab",
+        tags: ["Linux", "Hardening", "Security Baseline"]
+      },
+      {
+        featured: 8,
+        title: "Incident Response Plan",
+        category: "ir",
+        badge: "Incident Response",
+        desc: "Created an incident response plan/playbook covering preparation, identification, containment, eradication, recovery, and lessons learned.",
+        link: "https://github.com/Farva1/Incident-Response-Plan",
+        tags: ["Incident Response", "Playbook", "Documentation"]
+      },
+      {
+        featured: 9,
+        title: "Firewall Deployment Lab",
+        category: "firewall",
+        badge: "Firewall",
+        desc: "Explored firewall deployment strategies including perimeter placement, segmentation concepts, and DMZ design considerations.",
+        link: "https://github.com/Farva1/Firewall-Deployment-Lab",
+        tags: ["Firewall", "Segmentation", "DMZ"]
+      },
+      {
+        featured: 10,
+        title: "Cryptography Lab",
+        category: "crypto",
+        badge: "Cryptography",
+        desc: "Hands-on cryptography lab covering encryption and decryption tasks and core cryptographic concepts.",
+        link: "https://github.com/Farva1/Cryptography-Lab",
+        tags: ["Cryptography", "Encryption", "Decryption"]
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+    const search = document.getElementById("search");
+    const filter = document.getElementById("filter");
+    const sort = document.getElementById("sort");
+    const resultCount = document.getElementById("resultCount");
+    const stats = document.getElementById("stats");
+    const toast = document.getElementById("toast");
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => toast.style.display = "none", 1800);
+    }
+
+    document.getElementById("copyEmailBtn").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText("ummefarwa003@gmail.com");
+        showToast("Email copied.");
+      }catch(e){
+        showToast("Copy failed. Please copy manually: ummefarwa003@gmail.com");
+      }
+    });
+
+    function cardHTML(p){
+      const tags = p.tags.map(t => `<span class="tag">${t}</span>`).join("");
+      return `
+        <div class="card" data-category="${p.category}">
+          <div class="cardhead">
+            <h2 class="title">${p.title}</h2>
+            <span class="badge">${p.badge}</span>
+          </div>
+          <div class="desc">${p.desc}</div>
+          <div class="cta">
+            <a class="btn primary" href="${p.link}" target="_blank" rel="noreferrer">View on GitHub</a>
+          </div>
+          <div class="tagrow">${tags}</div>
+        </div>
+      `;
+    }
+
+    function applySort(list, mode){
+      const arr = [...list];
+      if(mode === "az"){
+        arr.sort((a,b) => a.title.localeCompare(b.title));
+      } else if(mode === "category"){
+        arr.sort((a,b) => (a.badge + a.title).localeCompare(b.badge + b.title));
+      } else {
+        arr.sort((a,b) => a.featured - b.featured);
+      }
+      return arr;
+    }
+
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const cat = filter.value;
+
+      let list = projects.filter(p => {
+        const inCat = (cat === "all") ? true : p.category === cat;
+        const inSearch = !q ? true : (
+          p.title.toLowerCase().includes(q) ||
+          p.desc.toLowerCase().includes(q) ||
+          p.tags.join(" ").toLowerCase().includes(q)
+        );
+        return inCat && inSearch;
+      });
+
+      list = applySort(list, sort.value);
+      grid.innerHTML = list.map(cardHTML).join("");
+
+      const total = projects.length;
+      resultCount.textContent = `Showing ${list.length} of ${total} projects`;
+      stats.textContent = `${total} projects`;
+    }
+
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    search.addEventListener("input", render);
+    filter.addEventListener("change", render);
+    sort.addEventListener("change", render);
+
+    render();
+  </script>
 </body>
 </html>
