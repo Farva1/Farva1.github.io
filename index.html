@@ -4,156 +4,322 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Umme Farva | Cybersecurity Portfolio</title>
-  <meta name="description" content="Umme Farva — Cybersecurity portfolio: SOC, Azure security, incident response, threat intelligence, and automation labs." />
+  <meta name="description" content="Umme Farva — SOC/Blue Team portfolio: Sentinel, threat intelligence, incident response, vulnerability assessment, network analysis, Linux hardening, and Python automation." />
+  <meta name="theme-color" content="#0b1220" />
 
   <style>
     :root{
-      --bg:#0b1220;
+      --bg:#070b14;
+      --bg2:#0b1220;
       --panel:#0f1930;
-      --card:#121a2b;
+      --card: rgba(16, 24, 43, .78);
       --text:#e8eefc;
       --muted:#a8b3cf;
       --accent:#7aa2ff;
-      --line:#1f2a44;
-      --shadow:0 12px 34px rgba(0,0,0,.28);
-      --shadow2:0 8px 20px rgba(0,0,0,.22);
+      --accent2:#61d4ff;
+      --good:#6ee7b7;
+      --line: rgba(122,162,255,.18);
+      --line2: rgba(97,212,255,.12);
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --shadow2: 0 10px 28px rgba(0,0,0,.32);
+      --radius: 18px;
     }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
-      background: radial-gradient(1200px 600px at 10% 0%, #121f3f 0%, var(--bg) 55%) fixed;
-      color:var(--text);
+      color: var(--text);
+      background:
+        radial-gradient(1000px 520px at 12% 0%, rgba(122,162,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 10%, rgba(97,212,255,.14), transparent 60%),
+        radial-gradient(900px 520px at 55% 120%, rgba(110,231,183,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 60%, var(--bg));
+      background-attachment: fixed;
+      overflow-x:hidden;
     }
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width:1100px; margin:0 auto; padding:28px 16px 70px; }
 
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:1120px; margin:0 auto; padding:28px 16px 70px; }
+
+    /* Top header */
     header{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(15,25,48,.95), rgba(11,18,32,.92));
-      border-radius:18px;
-      padding:18px;
-      box-shadow: var(--shadow);
       position:relative;
+      border-radius: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,25,48,.92), rgba(7,11,20,.92));
+      box-shadow: var(--shadow);
       overflow:hidden;
+      isolation:isolate;
     }
     header:before{
       content:"";
       position:absolute; inset:-2px;
       background:
-        radial-gradient(520px 160px at 18% 0%, rgba(122,162,255,.20), transparent 60%),
-        radial-gradient(520px 160px at 88% 20%, rgba(122,162,255,.10), transparent 55%);
-      pointer-events:none;
+        radial-gradient(540px 180px at 18% 0%, rgba(122,162,255,.30), transparent 60%),
+        radial-gradient(520px 170px at 88% 18%, rgba(97,212,255,.18), transparent 60%),
+        radial-gradient(420px 160px at 60% 110%, rgba(110,231,183,.12), transparent 60%);
       filter: blur(10px);
+      z-index:-1;
     }
-    header > *{ position:relative; }
+    header:after{
+      content:"";
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity:.10;
+      mask-image: radial-gradient(600px 260px at 20% 10%, black, transparent 70%);
+      pointer-events:none;
+      z-index:-1;
+    }
 
-    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
-    .subtitle{ margin-top:8px; color:var(--muted); line-height:1.55; }
-    .btnrow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .toprow{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      min-width: 260px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .name{
+      margin:0;
+      font-size: 30px;
+      letter-spacing:.2px;
+      line-height:1.2;
+    }
+    .headline{
+      color: var(--muted);
+      line-height:1.55;
+      max-width: 720px;
+      font-size: 14.8px;
+    }
+    .chiprow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 4px;
+    }
+    .chip{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(122,162,255,.22);
+      background: rgba(11,18,32,.45);
+      color: var(--muted);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      border-color: rgba(122,162,255,.55);
+      color: var(--text);
+    }
+    .dot{
+      width:7px;height:7px;border-radius:50%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(122,162,255,.45);
+      display:inline-block;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      margin-top:2px;
+    }
     .btn{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(18,26,43,.65);
-      color:var(--text);
-      transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(122,162,255,.18);
+      background: rgba(11,18,32,.50);
+      color: var(--text);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
       user-select:none;
     }
-    .btn:hover{ border-color: rgba(122,162,255,.75); transform: translateY(-1px); }
-    .btn.primary{ border-color: rgba(122,162,255,.55); background: rgba(122,162,255,.12); }
-    .btn.ghost{ background: rgba(15,25,48,.55); }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(122,162,255,.70);
+      box-shadow: 0 12px 26px rgba(0,0,0,.30);
+    }
+    .btn.primary{
+      border-color: rgba(97,212,255,.38);
+      background: linear-gradient(180deg, rgba(97,212,255,.14), rgba(122,162,255,.10));
+    }
+    .btn.ghost{
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+    }
 
+    /* Controls */
     .controls{
-      margin-top:16px;
+      margin-top: 18px;
       display:grid;
       grid-template-columns: 1.3fr .9fr .9fr;
       gap:12px;
     }
     .control{
-      border:1px solid var(--line);
-      background: rgba(18,26,43,.72);
-      border-radius:14px;
-      padding:10px 12px;
+      border:1px solid rgba(122,162,255,.14);
+      background: rgba(16,24,43,.72);
+      border-radius: 16px;
+      padding: 10px 12px;
       box-shadow: var(--shadow2);
+      backdrop-filter: blur(6px);
     }
-    .control label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+    .control label{
+      display:block;
+      font-size:12px;
+      color: var(--muted);
+      margin-bottom:6px;
+    }
     input[type="text"], select{
       width:100%;
       padding:10px 10px;
-      border-radius:12px;
-      border:1px solid rgba(31,42,68,.9);
-      background: rgba(11,18,32,.9);
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(7,11,20,.78);
       color: var(--text);
       outline:none;
     }
-    input[type="text"]:focus, select:focus{ border-color: rgba(122,162,255,.85); }
-
-    .meta{
-      margin-top:12px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; flex-wrap:wrap;
-      color: var(--muted);
-      font-size:13px;
+    input[type="text"]:focus, select:focus{
+      border-color: rgba(97,212,255,.70);
+      box-shadow: 0 0 0 3px rgba(97,212,255,.10);
     }
 
+    .meta{
+      margin-top: 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 13px;
+      opacity:.95;
+    }
+    .meta strong{ color: var(--text); font-weight:600; }
+
+    /* Grid + cards */
     .grid{
       display:grid;
-      grid-template-columns: repeat(12,1fr);
-      gap:14px;
-      margin-top:16px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 16px;
     }
     .card{
       grid-column: span 6;
-      border:1px solid var(--line);
-      background: rgba(18,26,43,.78);
-      border-radius:18px;
-      padding:16px;
+      border: 1px solid rgba(122,162,255,.14);
+      background: var(--card);
+      border-radius: 20px;
+      padding: 16px;
       box-shadow: var(--shadow2);
-      transition: .18s ease;
+      backdrop-filter: blur(6px);
+      position:relative;
+      overflow:hidden;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      will-change: transform;
     }
-    .card:hover{ transform: translateY(-2px); border-color: rgba(122,162,255,.50); }
+    .card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(122,162,255,.18), transparent 60%),
+        radial-gradient(420px 160px at 90% 30%, rgba(97,212,255,.10), transparent 60%);
+      opacity:0;
+      transition: opacity .22s ease;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(97,212,255,.45);
+      box-shadow: 0 18px 48px rgba(0,0,0,.42);
+    }
+    .card:hover:before{ opacity:1; }
+
     .cardhead{
-      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
-      margin-bottom:6px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      position:relative;
     }
     .title{
-      font-size:18px; margin:0; line-height:1.25;
-      letter-spacing:.1px;
+      margin:0;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing:.15px;
     }
     .badge{
-      font-size:12px; color: var(--muted);
-      border:1px solid var(--line);
-      padding:6px 10px; border-radius:999px;
-      background: rgba(11,18,32,.55);
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(7,11,20,.50);
       white-space:nowrap;
     }
-    .desc{ color:var(--muted); line-height:1.55; margin:8px 0 10px; }
-    .tagrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .tag{
-      font-size:12px;
-      color:var(--muted);
-      border:1px solid var(--line);
-      padding:5px 8px;
-      border-radius:999px;
-      background: rgba(11,18,32,.35);
+    .desc{
+      margin: 10px 0 10px;
+      color: var(--muted);
+      line-height: 1.55;
+      position:relative;
     }
-    .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
+    .tagrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+      position:relative;
+    }
+    .tag{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(7,11,20,.35);
+    }
+
+    .cta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      position:relative;
+    }
+
+    /* Footer + toast */
     footer{
-      margin-top:22px;
-      color:var(--muted);
-      font-size:13px;
+      margin-top: 22px;
       text-align:center;
+      color: var(--muted);
+      font-size: 13px;
       opacity:.92;
     }
-
     .toast{
-      position: fixed; bottom: 16px; left: 50%;
+      position:fixed;
+      left:50%;
+      bottom:16px;
       transform: translateX(-50%);
-      background: rgba(18,26,43,.95);
-      border: 1px solid var(--line);
+      background: rgba(16,24,43,.95);
+      border: 1px solid rgba(122,162,255,.22);
       color: var(--text);
       padding: 10px 12px;
       border-radius: 12px;
@@ -163,10 +329,16 @@
       max-width: calc(100% - 30px);
     }
 
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+
     @media (max-width: 860px){
       .controls{ grid-template-columns: 1fr; }
       .card{ grid-column: span 12; }
-      h1{ font-size:24px; }
+      .name{ font-size: 24px; }
+      .actions{ justify-content:flex-start; }
     }
   </style>
 </head>
@@ -174,17 +346,33 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Umme Farva</h1>
-      <div class="subtitle">
-        Cybersecurity portfolio with SOC/Blue Team labs: SIEM (Microsoft Sentinel), Threat Intelligence, Incident Response,
-        Vulnerability Assessment, Network Traffic Analysis, Linux Hardening, Cloud IAM, Cryptography, and Python automation.
-      </div>
+      <div class="toprow">
+        <div class="brand">
+          <h1 class="name">Umme Farva</h1>
+          <div class="headline">
+            Cybersecurity portfolio with SOC/Blue Team labs: Microsoft Sentinel, Threat Intelligence, Incident Response,
+            Vulnerability Assessment, Network Traffic Analysis, Linux Hardening, Cloud IAM, Cryptography, and Python automation.
+          </div>
 
-      <div class="btnrow">
-        <a class="btn primary" href="https://github.com/Farva1" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="btn" href="https://www.linkedin.com/in/umme-farva" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a class="btn" href="mailto:ummefarwa003@gmail.com">Email</a>
-        <button class="btn ghost" id="copyEmailBtn" type="button">Copy Email</button>
+          <!-- Skill badges -->
+          <div class="chiprow" aria-label="Skills">
+            <span class="chip"><span class="dot"></span>Microsoft Sentinel</span>
+            <span class="chip"><span class="dot"></span>Azure / Entra ID</span>
+            <span class="chip"><span class="dot"></span>Incident Response</span>
+            <span class="chip"><span class="dot"></span>Nessus</span>
+            <span class="chip"><span class="dot"></span>Wireshark</span>
+            <span class="chip"><span class="dot"></span>Linux Hardening</span>
+            <span class="chip"><span class="dot"></span>Python Automation</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="https://farva1.github.io" target="_blank" rel="noreferrer">Portfolio</a>
+          <a class="btn" href="https://github.com/Farva1" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/umme-farva" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="mailto:ummefarwa003@gmail.com">Email</a>
+          <button class="btn ghost" id="copyEmailBtn" type="button">Copy Email</button>
+        </div>
       </div>
 
       <div class="controls">
@@ -192,6 +380,7 @@
           <label for="search">Search</label>
           <input id="search" type="text" placeholder="Search projects (e.g., Sentinel, Nessus, Wireshark, Linux, Python)" />
         </div>
+
         <div class="control">
           <label for="filter">Category</label>
           <select id="filter">
@@ -207,9 +396,11 @@
             <option value="automation">Automation / Scripting</option>
           </select>
         </div>
+
         <div class="control">
-          <label for="sort">Sort</label>
+          <label for="sort">Order</label>
           <select id="sort">
+            <option value="socFirst">SOC first (recommended)</option>
             <option value="featured">Featured</option>
             <option value="az">A to Z</option>
             <option value="category">Category</option>
@@ -233,6 +424,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // Projects (ordered as "featured"; SOC-first ordering is applied via Sort menu)
     const projects = [
       {
         featured: 1,
@@ -245,15 +437,6 @@
       },
       {
         featured: 2,
-        title: "Python Security Log Analysis",
-        category: "automation",
-        badge: "Automation",
-        desc: "Python automation to parse authentication logs, count failed login attempts per IP, and flag suspicious IP addresses based on repeated failures.",
-        link: "https://github.com/Farva1/Python-Security-Log-Analysis",
-        tags: ["Python", "Log Analysis", "SOC Automation"]
-      },
-      {
-        featured: 3,
         title: "SOC Lab",
         category: "soc",
         badge: "SOC / SIEM",
@@ -262,13 +445,22 @@
         tags: ["SOC", "Detection", "Investigation"]
       },
       {
-        featured: 4,
+        featured: 3,
         title: "Azure IAM Cloud Security Lab",
         category: "cloud",
         badge: "Cloud Security",
         desc: "Identity and access management lab covering access controls, least privilege concepts, and security posture practices using Azure and Entra ID.",
         link: "https://github.com/Farva1/Azure-IAM-Cloud-Security-Lab",
         tags: ["Azure", "IAM", "Entra ID", "Access Control"]
+      },
+      {
+        featured: 4,
+        title: "Incident Response Plan",
+        category: "ir",
+        badge: "Incident Response",
+        desc: "Created an incident response plan/playbook covering preparation, identification, containment, eradication, recovery, and lessons learned.",
+        link: "https://github.com/Farva1/Incident-Response-Plan",
+        tags: ["Incident Response", "Playbook", "Documentation"]
       },
       {
         featured: 5,
@@ -299,21 +491,21 @@
       },
       {
         featured: 8,
-        title: "Incident Response Plan",
-        category: "ir",
-        badge: "Incident Response",
-        desc: "Created an incident response plan/playbook covering preparation, identification, containment, eradication, recovery, and lessons learned.",
-        link: "https://github.com/Farva1/Incident-Response-Plan",
-        tags: ["Incident Response", "Playbook", "Documentation"]
-      },
-      {
-        featured: 9,
         title: "Firewall Deployment Lab",
         category: "firewall",
         badge: "Firewall",
         desc: "Explored firewall deployment strategies including perimeter placement, segmentation concepts, and DMZ design considerations.",
         link: "https://github.com/Farva1/Firewall-Deployment-Lab",
         tags: ["Firewall", "Segmentation", "DMZ"]
+      },
+      {
+        featured: 9,
+        title: "Python Security Log Analysis",
+        category: "automation",
+        badge: "Automation",
+        desc: "Python automation to parse authentication logs, count failed login attempts per IP, and flag suspicious IP addresses based on repeated failures.",
+        link: "https://github.com/Farva1/Python-Security-Log-Analysis",
+        tags: ["Python", "Log Analysis", "SOC Automation"]
       },
       {
         featured: 10,
@@ -369,13 +561,32 @@
 
     function applySort(list, mode){
       const arr = [...list];
+
       if(mode === "az"){
         arr.sort((a,b) => a.title.localeCompare(b.title));
-      } else if(mode === "category"){
-        arr.sort((a,b) => (a.badge + a.title).localeCompare(b.badge + b.title));
-      } else {
-        arr.sort((a,b) => a.featured - b.featured);
+        return arr;
       }
+
+      if(mode === "category"){
+        arr.sort((a,b) => (a.badge + a.title).localeCompare(b.badge + b.title));
+        return arr;
+      }
+
+      if(mode === "socFirst"){
+        const priority = {
+          soc: 1, cloud: 2, ir: 3, vuln: 4, network: 5, linux: 6, firewall: 7, automation: 8, crypto: 9
+        };
+        arr.sort((a,b) => {
+          const pa = priority[a.category] ?? 99;
+          const pb = priority[b.category] ?? 99;
+          if(pa !== pb) return pa - pb;
+          return a.featured - b.featured;
+        });
+        return arr;
+      }
+
+      // featured
+      arr.sort((a,b) => a.featured - b.featured);
       return arr;
     }
 
@@ -397,8 +608,8 @@
       grid.innerHTML = list.map(cardHTML).join("");
 
       const total = projects.length;
-      resultCount.textContent = `Showing ${list.length} of ${total} projects`;
-      stats.textContent = `${total} projects`;
+      resultCount.innerHTML = `Showing <strong>${list.length}</strong> of <strong>${total}</strong> projects`;
+      stats.textContent = `${total} projects • Updated ${new Date().toLocaleDateString()}`;
     }
 
     document.getElementById("y").textContent = new Date().getFullYear();
